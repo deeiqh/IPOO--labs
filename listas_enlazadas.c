@@ -1,147 +1,156 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct node{
-    int num;
-    struct node* next;
+struct nodo{
+    int numero;
+    struct nodo *siguiente;
 };
 
-void anhade_a_nodo(struct node*, int);
-void imp_listas(struct node*);
-struct node* delete_all_de_lista(struct node*, int);
-void concat(struct node *, struct node *);
-struct node *anhade(struct node *, int , int);
-struct node *crear(int);
+struct nodo *crear(int);
+void imprimir(struct nodo *);
+void eliminar(struct nodo **, int);
+void concatenar(struct nodo **, struct nodo *);
+void agregar(struct nodo **, int, int);
 
-int main()
-{   
-    struct node *head = crear(3);
+int main(void)
+{
+    struct nodo *head = crear(5); // del 0 al 4
+    imprimir(head);
     
-    imp_listas(head);  
+    eliminar(&head,5); //el free, a un int lo vuelve cero y a un puntero lo deja como esta (no lo pone a NULL)
+    imprimir(head);
     
-    //anhade_a_nodo(head,4);
-    imp_listas(head);
+    struct nodo *head1 = NULL;
+    concatenar(&head1, head);
+    imprimir(head1);
     
-    head = delete_all_de_lista(head,0);
-    imp_listas(head);
+    struct nodo *head3 = crear(3);
+    concatenar(&head1, head3);
+    imprimir(head1);
     
-    struct node* head2 = malloc(sizeof(struct node));
-    head2->num = 77;
-    head2->next = NULL;
-    concat(head,head2);
-    imp_listas(head);
-    
-    head = anhade(head,56,3);
-    imp_listas(head);
+    agregar(&head, 9, 6);
+    imprimir(head);
     
     return 0;
 }
 
-void imp_listas(struct node* head)
+struct nodo *crear(int n)
 {
-    struct node* cur;
-    for(cur = head; cur != NULL; cur = cur->next){
-        printf("%d -> ", cur->num);
-    }
-    printf("\n");
-    return;
-}
-
-void anhade_a_nodo(struct node* cur, int n)
-{
-    struct node* nodo = malloc(sizeof(struct node));
-    nodo-> num = n;
-    nodo-> next = NULL;
-    cur->next = nodo;
-    return;    
-}
-
-struct node* delete_all_de_lista(struct node* head, int n)
-{
-    struct node* cur = head->next;
-    struct node* prev = head;
-    printf("%d\n",head->num);
-    if (head-> num == n){
-        head = head->next;
-        free(prev);
-    }
-    else
-         while (cur != NULL){
-            if (cur->num == n){
-                prev->next = cur->next;
-                free(cur);
-            }
-            prev = cur;
-            cur = cur->next;
-        }    
-    return head;
-}
-
-void concat(struct node * head1, struct node *head2)
-{
-    struct node *cur = head1;
-    for (; cur->next != NULL; cur = cur->next)
-        ;
-    cur->next = head2;
-}
-
-struct node *anhade(struct node * head, int num, int pos)
-{
-    struct node *prev = head,*cur = head->next,*nodo = malloc(sizeof(struct node));
-    nodo->num = num;
-    if (pos == 0){
-        nodo->next = prev;
-        head = nodo;
+    if (n>0){
+        //cabeza de lista
+        struct nodo *head = malloc(sizeof(struct nodo));
+        head->numero = 7;
+        head->siguiente = NULL;
+        //lo demás
+        if (n>1){            
+            struct nodo *cur = head; //tengo un current, ahora voy a agregar
+            for (int i = 1; i != n; i++){
+                struct nodo *nuevo = malloc(sizeof(struct nodo));                 
+                nuevo->numero = i;
+                nuevo->siguiente = NULL;
+                cur->siguiente = nuevo;
+                cur = nuevo;
+            }   
+        }
         return head;
     }
-    int cont;
-    for(cont = 1; cont != pos; cont++, prev = cur, cur = cur->next)
-        ;
-    prev->next = nodo;
-    nodo->next = cur;
-    
-    return head;
+    return NULL;
 }
 
-struct node *crear(int n)
+void imprimir(struct nodo *head)
 {
-    struct node* head = malloc(sizeof(struct node));
-    head->num = 0;
-    struct node* cur = head;    
-    for(int i = 1; i<=n; i++){      
-        struct node* nodo = malloc(sizeof(struct node));
-        nodo-> num = i;
-        cur-> next = nodo;
-        cur = nodo;
+    if (head == NULL)
+        printf("NULL\n");
+    else{
+        //imprime cabeza
+        printf("%d -> ",head->numero);
+        //lo demás
+        struct nodo *cur = head->siguiente; //tengo un current, ahora voy a imprimir
+        while (cur != NULL){
+            printf("%d -> ",cur->numero);
+            cur = cur->siguiente;
+        }
+        printf("NULL\n");
     }
-    cur-> next = NULL;
-    return head;
 }
 
+/*
+void eliminar(struct nodo *head2, int posicion) // head2 copia por valor de head; es decir, head nunca se va a modificar
+{
+    if (head2 != NULL){
+        //eliminar cabeza
+        if (posicion == 0){
+            struct nodo *temp = head2;
+            head2 = head2->siguiente;
+            free(temp); //el free, a un int lo vuelve cero y a un puntero lo deja como esta (no lo pone a NULL)
+            
+        }
+            
+    }
+}
+*/
 
+void eliminar(struct nodo **dir_head, int posicion)
+{
+    if (*dir_head != NULL){
+        //eliminar cabeza
+        if (posicion == 0){
+            struct nodo *temp = *dir_head;
+            *dir_head = (*dir_head)->siguiente;
+            free(temp);  
+        }
+        // lo demás
+        else{
+            struct nodo *anterior = *dir_head;
+            struct nodo *cur = (*dir_head)->siguiente;
+            int i = 1;
+            while ((cur != NULL) && (anterior == NULL || cur == NULL || i != posicion)){
+                anterior = cur;
+                cur = cur->siguiente;
+                i++;
+            }
+            if (cur == NULL)
+                return;
+            else{
+                anterior->siguiente = cur->siguiente;
+                free(cur);
+            }
+        }
+    }
+}
 
+void concatenar(struct nodo **dir_head1, struct nodo *head2)
+{
+    if (*dir_head1 == NULL){
+        *dir_head1 = head2;
+        return;
+    }
+    else{
+        struct nodo *cur = *dir_head1;
+        while (cur->siguiente != NULL)
+            cur = cur->siguiente;
+        cur->siguiente = head2;
+        
+    }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void agregar(struct nodo **dir_head, int numero, int posicion)
+{
+    struct nodo *nuevo = malloc(sizeof(struct nodo));
+    nuevo->numero = numero;
+    nuevo->siguiente = NULL;
+    //agregar a cabeza
+    if (posicion == 0){
+        nuevo->siguiente = *dir_head;
+        *dir_head = nuevo;
+    }
+    else{
+        struct nodo *anterior = *dir_head;
+        struct nodo *cur = (*dir_head)->siguiente;
+        for(int i = 1; i != posicion; anterior = cur, cur = cur->siguiente, i++)
+            ;
+        anterior->siguiente = nuevo;
+        nuevo->siguiente = cur;
+    }
+    
+}
