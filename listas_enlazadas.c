@@ -11,23 +11,15 @@ void imp_listas(struct node*);
 struct node* delete_all_de_lista(struct node*, int);
 void concat(struct node *, struct node *);
 struct node *anhade(struct node *, int , int);
+struct node *crear(int);
 
 int main()
 {   
-    struct node* head = malloc(sizeof(struct node));
-    head->num = 0;
-    struct node* cur = head;    
-    for(int i = 1; i<=3; i++){      
-        struct node* nodo = malloc(sizeof(struct node));
-        nodo-> num = i;
-        cur-> next = nodo;
-        cur = nodo;
-    }
-    cur-> next = NULL;
+    struct node *head = crear(3);
     
     imp_listas(head);  
     
-    anhade_a_nodo(cur,4);
+    //anhade_a_nodo(head,4);
     imp_listas(head);
     
     head = delete_all_de_lista(head,0);
@@ -108,6 +100,21 @@ struct node *anhade(struct node * head, int num, int pos)
     prev->next = nodo;
     nodo->next = cur;
     
+    return head;
+}
+
+struct node *crear(int n)
+{
+    struct node* head = malloc(sizeof(struct node));
+    head->num = 0;
+    struct node* cur = head;    
+    for(int i = 1; i<=n; i++){      
+        struct node* nodo = malloc(sizeof(struct node));
+        nodo-> num = i;
+        cur-> next = nodo;
+        cur = nodo;
+    }
+    cur-> next = NULL;
     return head;
 }
 
