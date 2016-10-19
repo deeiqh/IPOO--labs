@@ -1,21 +1,10 @@
 #include <iostream>
 
-using namespace std;
+int sum(const int a,const int b,const int c = 0,const int d = 0){return a+b+c+d;};
 
 int main(void)
 {
-    short number;
-    cout << "Enter a number: ";
-    cin >> number;
-
-    if (number <= 0)
-        cout << "No existe";
-    else if (number <= 19){
-        cout << "El factorial de " << number << " is ";
-        int acumulador = 1;
-        for(;number > 0; acumulador *= number--);
-        cout << acumulador << ".\n";
-    }
+    std::cout << sum(1,2,3);
+    
     return 0;
 }
-

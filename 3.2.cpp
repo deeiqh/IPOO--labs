@@ -1,35 +1,21 @@
 #include <iostream>
 
-using namespace std;
+int number = 35;
+
+void print_num() {std::cout << number; };
+void print_num2(int number2) //mejor opcion, no considera la variable global
+{
+    std::cout << number2;
+}
 
 int main(void)
 {
-    int n;
-    cin >> n;
-
-    int num;
-    cin >> num;
-    int min = num;
-    int max = num;
-    int sum = num;
-
-    for (int i = 1; i != n; i++){
-        cin >> num;
-        if (num < min)
-            min = num;
-        else if( num > max)
-            max = num;
-        sum += num;
-    }
-    double mean = double (sum)/n;
-    int range = max-min;
-
-    cout<<"Mean: "<<mean<<"\n";
-    cout<<"Max: "<<max<<"\n";
-    cout<<"Min: "<<min<<"\n";
-    cout<<"Range: "<<range<<"\n";
-
-
-	return 0;
+    
+    print_num();
+    std::cout << "\n";
+    int number2 = 70;
+    print_num2(number2);
+    
+    return 0;
 }
 
