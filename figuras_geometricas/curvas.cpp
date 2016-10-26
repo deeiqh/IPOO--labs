@@ -10,5 +10,5 @@ TPunto Curvas:: area() const
 
 TPunto Curvas:: perimetro() const
 {
-    return TPunto( 2.0 * PI * ( sqrt( pow(puntos[1].x,2) + pow(puntos[2].x,2) / 2.0) ) );
+    return TPunto( 2.0 * PI * sqrt( ( pow(puntos[1].x,2) + pow(puntos[2].x,2) ) / 2.0) );
 }
