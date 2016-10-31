@@ -142,7 +142,7 @@ double Triangle :: area () const
            b = std :: sqrt ( distx1_2 * distx1_2 + disty1_2 * disty1_2 ) ,
            c = std :: sqrt ( distx2_0 * distx2_0 + disty2_0 * disty2_0 ) ;
     double s = ( a + b + c ) / 2;
-    return std :: sqrt ( s * (s - a ) * (s - b ) * (s - c ) ) ;
+    return sqrt ( s * (s - a ) * (s - b ) * (s - c ) ) ;
 }
 
 
