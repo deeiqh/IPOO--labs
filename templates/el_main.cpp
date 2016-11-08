@@ -43,7 +43,7 @@ public:
     }
     
 };
-       
+        
 int main(void)
 {
     Punto<int> p_1(1,2);
