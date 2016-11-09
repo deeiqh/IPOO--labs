@@ -41,7 +41,10 @@ public:
         output << '(' << x << ", " <<y << ')';
         return output;
     }
-    
+    bool operator<(const Punto &punto) const//*1 orden segun elemento x, para que funciones inset en sets.
+    {
+        return x < punto.x;
+    }
 };
         
 
@@ -51,17 +54,30 @@ int main(void)
     Punto<int> p_2(3,4);
     Punto<int> p_3 = p_1 + p_2;
     
-    p_3 << cout;;
+    p_3 << cout;
     
     
-    vector< Punto<float> > vec1 = vector< Punto<float> > (1);
+    vector< Punto<float> > vec1;
+    vec1.reserve(1);
+    cout << vec1.size();
 
     Punto<float> p(1.0,1.0);
-    vec1[0]= p;
-        
-    set< vector< Punto<float> > > c;
-    c.insert(vec1);
+    vec1.insert(vec1.begin(),p);//asi se inseta en un vector
+    cout << vec1.size();
     
-  
+    set< vector< Punto<float> > > c;
+    c.insert(vec1); //*1 los elementos del conjunto deben guardar orden, para que esto se puedea
+                    // hacer se requiere que vector tenga un orden(sus elementos)
+    cout << c.size();
+    cout << vec1.size();
+    cout << c.begin()->size();
+       
+    vector <Punto <float>> vee (*c.begin());
+    cout << vee.size();
+    
+    Punto <float> pt;
+    pt = vee[0];
+    
+    pt << cout;
     return 0;
 }
