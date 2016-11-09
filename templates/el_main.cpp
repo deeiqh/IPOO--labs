@@ -36,33 +36,32 @@ public:
         p_3.set_Y(p_2.get_Y());
         return p_3;
     }
-    ostream& operator<<(ostream &output, const Punto &p)
+    ostream& operator<<(ostream &output)
     {
-        output << '(' << p.x << ', ' << p.y << ')';
+        output << '(' << x << ", " <<y << ')';
         return output;
     }
     
 };
         
+
 int main(void)
 {
     Punto<int> p_1(1,2);
     Punto<int> p_2(3,4);
     Punto<int> p_3 = p_1 + p_2;
     
-    cout << p_3 << '\n';
+    p_3 << cout;;
     
-    set< vector< Punto<float> > > c;
     
-    vector< Punto<float> > vec1;
-    vec1.reserve(1);
-    
+    vector< Punto<float> > vec1 = vector< Punto<float> > (1);
+
     Punto<float> p(1.0,1.0);
     vec1[0]= p;
-    
+        
+    set< vector< Punto<float> > > c;
     c.insert(vec1);
-    float x = (*c.begin())->get_X;
-    cout << x << '\n';
     
+  
     return 0;
 }
