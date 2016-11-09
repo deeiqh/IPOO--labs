@@ -62,11 +62,11 @@ int main(void)
     cout << vec1.size();
 
     Punto<float> p(1.0,1.0);
-    vec1.insert(vec1.begin(),p);//asi se inseta en un vector
+    vec1.insert(vec1.begin(),p);//asi se inserta en un vector
     cout << vec1.size();
     
     set< vector< Punto<float> > > c;
-    c.insert(vec1); //*1 los elementos del conjunto deben guardar orden, para que esto se puedea
+    c.insert(vec1); //*1 los elementos del conjunto deben guardar orden, para que esto se pueda
                     // hacer se requiere que vector tenga un orden(sus elementos)
     cout << c.size();
     cout << vec1.size();
