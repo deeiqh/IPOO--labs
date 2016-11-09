@@ -41,7 +41,7 @@ public:
         output << '(' << x << ", " <<y << ')';
         return output;
     }
-    bool operator<(const Punto &punto) const//*1 orden segun elemento x, para que funciones inset en sets.
+    bool operator<(const Punto &punto) const//*1 orden segun elemento x, para que funcionen inset en sets.
     {
         return x < punto.x;
     }
