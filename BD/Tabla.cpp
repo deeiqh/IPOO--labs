@@ -33,7 +33,7 @@ string ingresar_campo(Tam tc)//tamaño de registros, cantidad de campos
 Registro *Tabla::genera_registro() 
 {
     Registro *ptr_registro = new string;
-    for(int i = 0; i < cant_campos(); i++){
+    for(int i = 0; i < cant_campos()+1; i++){
         *ptr_registro += ingresar_campo(tamanho_campo);
         ptr_registro->pb(' ');
     }
@@ -42,19 +42,19 @@ Registro *Tabla::genera_registro()
 
 Registro *Tabla::genera_cabecera()
 {
-    string *ptr_registro = new string;
-    (*ptr_registro) += nombres_campos;
+    string *ptr_registro = new string(campo_key);
+    (*ptr_registro) += " " + nombres_campos;
     return ptr_registro;
 
 }
 
 void Tabla::insertar(Registro *ptr_registro) 
 {
-    archivo.open(nombre,ostream::app | ostream::binary);
+    archivo.open(nombre,ostream::app);
     istringstream is(*ptr_registro);
     string format;
     string temp;
-    Tam cc = cant_campos();
+    Tam cc = cant_campos() + 1;
     for(int i = 0; i < cc; i++){
         is >> temp; 
         format.append(temp);
@@ -73,21 +73,28 @@ void Tabla::insertar(Registro *ptr_registro)
 
 bool Tabla::indexado(string campo)
 {
-    archivo.open(nombre, istream:: in | istream::binary);
+    archivo.open(nombre, istream:: in);
     //Tam move = (tamanho_campo+1)*cant_campos();
     //archivo.seekg(move, istream::beg());   
     
-    istringstream cabecera;
-    getline(archivo, cabecera);
-    istringstream valores;
-    getline(archivo, valores);    
+    string cabecera_t; istringstream cabecera;
+    getline(archivo, cabecera_t); cabecera.str(cabecera_t);
+    
+    string valores_t; istringstream valores;
+    getline(archivo, valores_t); valores.str(valores_t);    
+    
+    archivo.close();
     
     map<string,string> mapa;
     string val, val2;
     while (cabecera >> val && valores >> val2 ){
         mapa[val] = val2;
     }
-    if (auto it = mapa.find(campo) != mapa.end() && it->second == "1")
+    auto it = mapa.find(campo);
+    if ( it != mapa.end() && it->second  == "1")
         return true;
+    return false;
 }
+
+
     
