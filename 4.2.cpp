@@ -5,7 +5,7 @@ using namespace std;
 int main(void)
 {
     short number;
-    cout << "Enter a number: ";
+    cout << "Enter a numero: ";
     cin >> number;
 
     if (number <= 0)
