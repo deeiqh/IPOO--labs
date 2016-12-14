@@ -1,0 +1,21 @@
+Abstract factory, Builder , Factory method
+
+Singleton - Prototype - Object pool
+
+Lazy initialization - Multiton
+
+Composite - Facade
+
+Bridge - Decorator
+
+Flyweight - Adapter
+
+Proxy - Private Class Data
+
+Strategy - Observer
+
+Mediator - Memento
+
+State - Template method - Visitor
+
+Interpreter - Null object - Iterator
